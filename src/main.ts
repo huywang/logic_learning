@@ -25,6 +25,7 @@ interface ProgressState {
   notes: Record<number, string>;
   initiative: Record<number, number>;
   persistence: Record<number, number>;
+  transfer: Record<number, number>;
 }
 
 const rawLessons = [
@@ -121,11 +122,11 @@ const rawLessons = [
     title: "Scratch 抽屉模拟器",
     type: "Scratch 项目",
     goal: "用模拟验证推理。",
-    prompt: ["做一个程序，随机生成 37 个同学的生日月份。", "统计每个月人数。", "显示人数最多的月份。"],
-    guide: ["月份如何随机？", "12 个月人数用什么记录？", "怎么找最大值？"],
-    hints: ["可以先用 12 个变量，不急着用列表。", "每生成一个月份，对应变量加 1。", "最后逐个比较找最大。"],
-    solution: ["模拟不能代替证明，但能帮助看见规律。", "抽屉原理是保证结论，随机模拟是现象展示。"],
-    extension: "把人数改成 25、36、37、49，观察变化。",
+    prompt: ["做一个程序，随机生成 37 个同学的生日月份。", "用列表统计每个月人数。", "显示人数最多的月份，并检查是否至少 4 人。"],
+    guide: ["为什么月份人数列表像 12 个抽屉？", "随机到第 5 月时，列表第 5 项应该怎么变？", "怎么检查 12 项加起来一定是 37？", "模拟结果和抽屉原理的证明有什么不同？"],
+    hints: ["列表第 1 项代表 1 月，第 12 项代表 12 月。", "每生成一个月份，就读取对应项、加 1、写回去。", "增加一个“总人数检查”，把列表 12 项加起来。"],
+    solution: ["推荐用列表，不用 12 个变量。", "核心模式是：读取列表项 -> 修改 -> 替换写回。", "模拟不能代替证明；证明说明“必然至少 4 人”，模拟帮助看见每次分布不同。"],
+    extension: "加入“学生人数输入框”，测试 36、37、48、49 人时分别能保证什么。",
   },
   {
     week: 4,
@@ -143,11 +144,11 @@ const rawLessons = [
     title: "最短路径计数",
     type: "算法思维",
     goal: "从找一条路升级到数所有最短路。",
-    prompt: ["在 3x3 方格上，从左下角到右上角，只能向右或向上。", "最短路径有多少条？", "如果中间一个点不能走呢？"],
-    guide: ["总共要走几步？", "其中几步向右，几步向上？", "不同顺序是不是不同路径？", "障碍点会排除哪些路径？"],
-    hints: ["3 步右，3 步上。", "问题变成 6 个位置里选 3 个放右。", "有障碍时，可以数经过障碍的路径再减掉。"],
-    solution: ["无障碍共有 C(6,3)=20 条。", "障碍版本要看障碍坐标，先数所有，再减经过障碍的路径。"],
-    extension: "换成 4x4 方格，只求无障碍路径数。",
+    prompt: ["在 3x3 方格上，从左下角到右上角，只能向右或向上。", "先画出所有最短路线，再找一种不重不漏的计数方法。", "如果中间一个点不能走，哪些路线会失效？"],
+    guide: ["总共要走几步？", "每条最短路里有几步向右、几步向上？", "你能不能给每条路写成 RRUURU 这样的编码？", "障碍点会排除哪些编码？"],
+    hints: ["先从 2x2 小方格开始枚举。", "用 R 表示向右，用 U 表示向上。", "先追求“不重不漏”，组合公式只作为加深。"],
+    solution: ["核心不是背 C(6,3)，而是把路径编码成由 R 和 U 组成的序列。", "无障碍时，问题变成“所有 R/U 排列”。", "有障碍时，可以先标出经过障碍的路径，再排除。"],
+    extension: "如果她主动问公式，再引入“6 个位置选 3 个放 R”的组合表达。",
   },
   {
     week: 4,
@@ -220,11 +221,11 @@ const rawLessons = [
     title: "Scratch 递归图形",
     type: "Scratch 项目",
     goal: "用自制积木表达重复结构。",
-    prompt: ["用自制积木画树枝。", "每画一根树枝，就分成两根更短的树枝。", "深度到 0 停止。"],
-    guide: ["什么参数会变？", "什么时候停止？", "如果不停止会怎样？"],
-    hints: ["参数：长度、深度。", "每次长度变短，深度减 1。", "深度为 0 就返回。"],
-    solution: ["递归必须有停止条件。", "每层做相似但更小的事情。"],
-    extension: "调整角度和长度比例，观察图形差异。",
+    prompt: ["做一个“分形树”绘图项目。", "第一版先用循环画重复分叉，不要求真正递归。", "第二版再尝试用自制积木加入“长度”和“层数”两个参数。"],
+    guide: ["每一层树枝有什么相同？", "下一层和上一层相比，什么变短了？", "层数减少到 0 时为什么要停止？", "如果先不用递归，能不能手动做 3 层？"],
+    hints: ["先画一根线，再左转、右转画两根短线。", "把“长度变短”做成变量。", "递归是挑战任务；能讲清层数变化就够了。"],
+    solution: ["最佳实践是先做可运行的 3 层手动版，再抽象成自制积木。", "递归的核心不是炫技，而是“相同规则作用在更小规模上”。"],
+    extension: "比较手动 3 层、循环版本、自制积木版本，问她哪个最容易改。",
   },
   {
     week: 7,
@@ -254,9 +255,9 @@ const rawLessons = [
     type: "Scratch 项目",
     goal: "用大量模拟观察概率。",
     prompt: ["做一个掷骰子模拟器。", "点击一次模拟 100 次。", "显示 1 到 6 出现次数。"],
-    guide: ["如何生成 1 到 6？", "如何记录每个点数次数？", "100 次和 1000 次结果有什么不同？"],
-    hints: ["先用 6 个变量记录次数。", "循环 100 次，每次随机一个点数。", "对应点数变量加 1。"],
-    solution: ["次数越多，分布通常越接近均匀。", "模拟帮助理解，但概率结论来自数学推理。"],
+    guide: ["如何生成 1 到 6？", "为什么 6 个点数适合用列表记录？", "100 次和 1000 次结果有什么不同？", "怎么确认总次数没有丢？"],
+    hints: ["建立一个长度为 6 的列表。", "随机到点数 k，就把列表第 k 项加 1。", "最后把 6 项相加，检查是否等于模拟次数。"],
+    solution: ["推荐用列表记录 1 到 6 的次数，延续前面抽屉模拟器的模式。", "次数越多，分布通常越接近均匀。", "模拟帮助理解，但概率结论来自数学推理。"],
     extension: "模拟两个骰子的和，观察 7 是否最多。",
   },
   {
@@ -275,22 +276,22 @@ const rawLessons = [
     title: "图和最短路",
     type: "算法思维",
     goal: "把地图抽象成点和边。",
-    prompt: ["画 6 个地点 A-F，连上不同道路并标距离。", "从 A 到 F 找最短路线。", "要求说明为什么不是另一条。"],
-    guide: ["地点是什么？道路是什么？距离是什么？", "能不能先列出候选路线？", "如何避免漏掉？"],
-    hints: ["用点表示地点，用线表示道路。", "先从 A 的邻居开始扩展。", "记录到每个点目前最短距离。"],
-    solution: ["这是图的最短路问题。", "小学阶段不必完整讲 Dijkstra，但可以训练“记录当前最优并更新”。"],
-    extension: "把地铁换乘设计成图。",
+    prompt: ["画 6 个地点 A-F，连上不同道路并标距离。", "从 A 到 F 找一条总距离最短的路线。", "要求她列出至少 3 条候选路线并比较。"],
+    guide: ["地点、道路、距离分别对应什么？", "只看离 A 最近的一步一定对吗？", "怎样记录目前找到的最好路线？", "有没有一条看起来绕远但总距离更短的路线？"],
+    hints: ["用点表示地点，用线表示道路。", "先列候选路线，不急着讲算法名。", "用表格记录：路线、总距离、是否当前最优。"],
+    solution: ["这是图建模和路线评分，不需要直接讲 Dijkstra。", "最佳学习目标是：把真实地图抽象成点、边、权重，并能用证据比较路线。"],
+    extension: "把家到学校、地铁换乘或商场路线设计成图。",
   },
   {
     week: 8,
     title: "Scratch 最短路演示",
     type: "Scratch 项目",
     goal: "可视化图搜索。",
-    prompt: ["做 6 个城市节点。", "点击两个城市显示路线长度。", "手动选择路线，程序计算总长度。"],
-    guide: ["城市和道路怎么表示？", "路线总长度怎么累计？", "怎么知道走过哪些城市？"],
-    hints: ["先做手动路线选择，不急着自动搜索。", "变量记录总距离。", "列表记录走过城市。"],
-    solution: ["这个项目先训练建模：点、边、权重、路径。", "自动搜索可以作为下一阶段。"],
-    extension: "增加“撤销上一步”。",
+    prompt: ["做一个“路线评分器”。", "地图上有 6 个城市节点和若干道路。", "玩家手动点击一条路线，程序累计总距离并显示走过城市。"],
+    guide: ["城市和道路怎么表示？", "路线总长度怎么累计？", "怎么防止同一个城市被重复点击？", "玩家什么时候算到达终点？"],
+    hints: ["先做手动路线选择，不做自动搜索。", "变量记录总距离，列表记录走过城市。", "每次点击后显示“当前路线”和“当前距离”。"],
+    solution: ["这个项目的重点是数据建模，不是自动求最短路。", "能把点、边、权重、路径四个概念讲清楚，就达到目标。"],
+    extension: "增加“撤销上一步”和“保存当前最佳路线”。",
   },
   {
     week: 9,
@@ -319,11 +320,11 @@ const rawLessons = [
     title: "Scratch 取石子游戏",
     type: "Scratch 项目",
     goal: "实现一个有策略的小游戏。",
-    prompt: ["做 15 颗石子的游戏。", "玩家每次拿 1 到 3 颗。", "电脑用必胜策略回应。"],
-    guide: ["剩余石子如何记录？", "玩家拿 k 颗后电脑拿几颗？", "什么时候判断胜负？"],
-    hints: ["变量：剩余、玩家拿、电脑拿。", "电脑目标是让一轮合计 4。", "剩余为 0 时结束。"],
-    solution: ["电脑策略：玩家拿 k，电脑拿 4-k。", "如果开局是 15，电脑后手可能不一定必胜，先让电脑先手演示。"],
-    extension: "增加“玩家先手”和“电脑先手”两种模式。",
+    prompt: ["做 15 颗石子的策略游戏。", "每次可拿 1 到 3 颗，拿到最后一颗的人赢。", "第一版让电脑作为“策略教练”，提示当前最好拿几颗。"],
+    guide: ["剩余石子如何记录？", "哪些剩余数量是对当前玩家不利的？", "如果玩家拿 k 颗，局面会变成什么？", "什么时候判断胜负？"],
+    hints: ["变量：剩余、玩家拿、建议拿。", "4、8、12 是关键失败局面。", "先做提示模式，再做电脑对战模式。"],
+    solution: ["从 15 颗开始，先手最佳是拿 3，留下 12。", "电脑如果后手且玩家总是最优，电脑无法保证赢；所以第一版做“策略教练”更诚实。"],
+    extension: "第二版加入“电脑先手”和“玩家先手”两种模式，比较胜率。",
   },
   {
     week: 10,
@@ -429,9 +430,9 @@ const rawLessons = [
 const lessons: Lesson[] = rawLessons.map((lesson, index) => ({
   id: index + 1,
   duration: lesson.type === "Scratch 项目" ? "45 分钟" : "35 分钟",
-  materials:
+    materials:
     lesson.type === "Scratch 项目"
-      ? ["Scratch", "纸笔", "上一课记录"]
+      ? ["Scratch", "纸笔", "上一课记录", "变量和列表草图"]
       : lesson.type === "算法思维"
         ? ["纸笔", "扑克牌或方格纸", "计数表"]
         : ["纸笔", "草稿纸"],
@@ -459,7 +460,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div>
       <p class="eyebrow">10 岁进阶版 · 上海四年级 · 有 Scratch 基础</p>
       <h1>儿童逻辑推理交互教案</h1>
-      <p class="header-copy">从谜题兴趣出发，逐步进入证明、反例、算法策略、概率统计和 Scratch 项目化表达。</p>
+      <p class="header-copy">遵循“先动手推理，再抽象建模，最后用 Scratch 表达”的路线，逐步进入证明、反例、算法策略、概率统计和项目调试。</p>
     </div>
     <div class="progress-box">
       <span id="progressCount">0/36</span>
@@ -489,6 +490,11 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <span id="persistenceValue"></span>
         </label>
         <label>
+          迁移能力
+          <input id="transferRange" type="range" min="1" max="5" step="1" />
+          <span id="transferValue"></span>
+        </label>
+        <label>
           观察笔记
           <textarea id="notesInput" rows="8" placeholder="记录她在哪一步眼睛发亮、哪里卡住、说出了什么关键思路。"></textarea>
         </label>
@@ -497,11 +503,11 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <section class="coach-card compact">
         <h2>进阶带法</h2>
         <ul>
-          <li>先问她“为什么”，再看答案。</li>
-          <li>鼓励发现“信息不足”。</li>
-          <li>遇到所有、一定，先找反例。</li>
-          <li>Scratch 只做表达工具，不刷语法。</li>
-          <li>每 4 周根据记录调整方向。</li>
+          <li>每课保留低门槛任务和高天花板挑战。</li>
+          <li>先用纸笔或实物推理，再打开 Scratch。</li>
+          <li>遇到“所有”“一定”，先找反例。</li>
+          <li>每个项目都要能解释变量、规则和测试方法。</li>
+          <li>每 4 周按主动性、坚持度、迁移能力调整方向。</li>
         </ul>
       </section>
     </aside>
@@ -517,6 +523,8 @@ const initiativeRange = required<HTMLInputElement>("#initiativeRange");
 const initiativeValue = required<HTMLSpanElement>("#initiativeValue");
 const persistenceRange = required<HTMLInputElement>("#persistenceRange");
 const persistenceValue = required<HTMLSpanElement>("#persistenceValue");
+const transferRange = required<HTMLInputElement>("#transferRange");
+const transferValue = required<HTMLSpanElement>("#transferValue");
 const notesInput = required<HTMLTextAreaElement>("#notesInput");
 const completeBtn = required<HTMLButtonElement>("#completeBtn");
 
@@ -685,6 +693,12 @@ function bindRecordEvents() {
     saveState();
   });
 
+  transferRange.addEventListener("input", () => {
+    state.transfer[currentLesson.id] = Number(transferRange.value);
+    transferValue.textContent = `${transferRange.value} 分`;
+    saveState();
+  });
+
   notesInput.addEventListener("input", () => {
     state.notes[currentLesson.id] = notesInput.value;
     saveState();
@@ -708,8 +722,10 @@ function bindRecordEvents() {
 function syncRecordControls() {
   initiativeRange.value = String(state.initiative[currentLesson.id] ?? 3);
   persistenceRange.value = String(state.persistence[currentLesson.id] ?? 3);
+  transferRange.value = String(state.transfer[currentLesson.id] ?? 3);
   initiativeValue.textContent = `${initiativeRange.value} 分`;
   persistenceValue.textContent = `${persistenceRange.value} 分`;
+  transferValue.textContent = `${transferRange.value} 分`;
   notesInput.value = state.notes[currentLesson.id] ?? "";
   completeBtn.textContent = state.completed.includes(currentLesson.id) ? "标记为未完成" : "标记本课完成";
 }
@@ -727,6 +743,7 @@ function loadState(): ProgressState {
     notes: {},
     initiative: {},
     persistence: {},
+    transfer: {},
   };
 
   try {
