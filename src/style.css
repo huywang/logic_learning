@@ -1,0 +1,584 @@
+:root {
+  color: #18201d;
+  background: #f6f3ea;
+  font-family:
+    Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --paper: #fffdf7;
+  --ink: #18201d;
+  --muted: #647069;
+  --line: #ded8ca;
+  --soft-line: #ebe5d8;
+  --green: #2d7d63;
+  --green-soft: #e4f1ea;
+  --blue: #346cb0;
+  --blue-soft: #e7eef8;
+  --amber: #9a6719;
+  --amber-soft: #f7ecd8;
+  --red: #aa4b42;
+  --shadow: 0 18px 50px rgba(42, 36, 24, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #f6f3ea;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px 22px;
+  border-bottom: 1px solid var(--line);
+  background: #fbf8ef;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  color: var(--ink);
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.header-copy {
+  margin-top: 8px;
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.progress-box {
+  width: min(260px, 34vw);
+  min-width: 180px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.progress-box span {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 850;
+}
+
+.progress-track {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8e1d2;
+}
+
+#progressBar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  transition: width 180ms ease;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 310px;
+  gap: 20px;
+  min-height: calc(100vh - 125px);
+  padding: 20px;
+}
+
+.lesson-nav,
+.lesson-panel,
+.coach-panel {
+  min-width: 0;
+}
+
+.lesson-nav {
+  display: flex;
+  max-height: calc(100vh - 165px);
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 20px;
+}
+
+.nav-title {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.week-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.week-tabs button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: #38423d;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.week-tabs button.active {
+  border-color: rgba(45, 125, 99, 0.34);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.lesson-list {
+  display: grid;
+  gap: 10px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.lesson-item {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 70px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.lesson-item.active {
+  border-color: rgba(45, 125, 99, 0.5);
+  box-shadow: 0 0 0 3px rgba(45, 125, 99, 0.1);
+}
+
+.lesson-item.done .lesson-number {
+  background: var(--green);
+  color: #fff;
+}
+
+.lesson-number {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 8px;
+  background: #eee7d8;
+  color: #5e665f;
+  font-weight: 900;
+}
+
+.lesson-item strong,
+.lesson-item small {
+  display: block;
+}
+
+.lesson-item strong {
+  font-size: 14px;
+}
+
+.lesson-item small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.lesson-panel {
+  padding-bottom: 24px;
+}
+
+.lesson-hero,
+.teaching-block,
+.mini-card,
+.coach-card,
+.recap-band,
+.extension-box {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.lesson-hero {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+}
+
+.lesson-hero h2 {
+  margin-top: 12px;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.lesson-hero p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.type-pill.logic {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.type-pill.algorithm {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.type-pill.scratch {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.meta-grid {
+  display: grid;
+  gap: 8px;
+  min-width: 110px;
+}
+
+.meta-grid span {
+  padding: 9px 10px;
+  border: 1px solid var(--soft-line);
+  border-radius: 8px;
+  color: #4a554f;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.mini-card {
+  padding: 18px;
+}
+
+.mini-card h3,
+.coach-card h2 {
+  margin-bottom: 12px;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.mini-list,
+.prompt-list,
+.guide-list,
+.solution-list,
+.coach-card ul {
+  margin: 0;
+  padding-left: 19px;
+}
+
+li + li {
+  margin-top: 8px;
+}
+
+.teaching-block {
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+.block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--soft-line);
+  background: #fbf8ef;
+}
+
+.block-head span {
+  font-weight: 900;
+}
+
+.prompt-list,
+.guide-list,
+.solution-list,
+.hint-list {
+  padding: 18px 22px 20px 38px;
+}
+
+.prompt-list li {
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.guide-list li {
+  color: #2e3833;
+}
+
+.hint-list {
+  min-height: 58px;
+  margin: 0;
+}
+
+.hint-list:empty::before {
+  content: "先让孩子自己想。需要时再逐条显示提示。";
+  display: block;
+  margin-left: -16px;
+  color: var(--muted);
+}
+
+.secondary-action,
+.primary-action {
+  min-height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.secondary-action {
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: #fffaf0;
+  color: #39443e;
+}
+
+.secondary-action:disabled {
+  cursor: default;
+  opacity: 0.56;
+}
+
+.solution-box {
+  border-top: 0;
+}
+
+.hidden-content {
+  display: none;
+}
+
+.recap-band,
+.extension-box {
+  display: flex;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 16px 18px;
+}
+
+.recap-band {
+  border-color: rgba(45, 125, 99, 0.28);
+  background: var(--green-soft);
+}
+
+.extension-box {
+  border-color: rgba(154, 103, 25, 0.24);
+  background: var(--amber-soft);
+}
+
+.recap-band strong,
+.extension-box strong {
+  flex: 0 0 76px;
+}
+
+.coach-panel {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 165px);
+}
+
+.coach-card {
+  padding: 18px;
+}
+
+.coach-card label {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  color: #34413a;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.coach-card input[type="range"] {
+  width: 100%;
+  accent-color: var(--green);
+}
+
+.coach-card textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 11px;
+  background: #fffaf0;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.coach-card textarea:focus {
+  outline: 3px solid rgba(45, 125, 99, 0.14);
+  border-color: rgba(45, 125, 99, 0.55);
+}
+
+.primary-action {
+  width: 100%;
+  margin-top: 16px;
+  background: var(--green);
+  color: #fff;
+}
+
+.compact {
+  box-shadow: none;
+}
+
+.compact li {
+  color: #35413b;
+  font-size: 14px;
+}
+
+@media (max-width: 1180px) {
+  .app-shell {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+
+  .coach-panel {
+    grid-column: 1 / -1;
+    position: static;
+    max-height: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .app-header {
+    display: grid;
+    padding: 22px 18px;
+  }
+
+  .progress-box {
+    width: 100%;
+  }
+
+  .app-shell {
+    display: block;
+    padding: 14px;
+  }
+
+  .lesson-nav {
+    position: static;
+    max-height: none;
+    margin-bottom: 14px;
+  }
+
+  .lesson-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .lesson-item {
+    min-height: 86px;
+  }
+
+  .lesson-hero,
+  .content-grid,
+  .coach-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-hero h2 {
+    font-size: 24px;
+  }
+
+  .block-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .secondary-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .week-tabs,
+  .lesson-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lesson-item {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-number {
+    width: 30px;
+    height: 30px;
+  }
+
+  .prompt-list li {
+    font-size: 16px;
+  }
+
+  .recap-band,
+  .extension-box {
+    display: grid;
+  }
+}
